@@ -1,18 +1,29 @@
-import React from "react"
+import React from "react";
 import ReactDOM from "react-dom/client"; // for React 18+
 
-//create nested tag
-const parent = React.createElement("div", { id: "parent" }, [
-    React.createElement("div", { id: "child1" },
-        [React.createElement("h1", {}, "i am h1 tag"),
-        React.createElement("h2", {}, "i am h2 tag")]
-    )
-    , React.createElement("div", { id: "child2" },
-        [React.createElement("h1", {}, "i am h1 tag"),
-        React.createElement("h2", {}, "i am h2 tag")]
-    )])
-
+//JSX (trnaspiled this code before reach to javascript engine )-parcel pass the control to babel package who doest the transpile.
+//JSX  React.Createelement=>reactelement => JS Oject=>HtmlElement
+//React element
+const Title =()=> <h1 className="head">Namaste react using jsx</h1>;
+//const title = <h1 className="head">Namaste react using jsx</h1>;
  
-console.log(parent)//object
-const root = ReactDOM.createRoot(document.getElementById("root"))
-root.render(parent)
+//React Component
+//Class component -OLd
+//Functional Component -New
+var number=10;//js variable 
+//React functional Component -New
+//component composition when put one component in other
+const HeadingComponent = () => (
+  <div id="container">
+    {/* javascript expression we can use in side js */}
+    {/* call component in this way as well */}
+    {Title()} 
+    {/* and this way as well */}
+    <Title/>
+  <h1 className="heading">Namaste React functional component</h1>
+  </div>
+);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+//react dom take this object heading and convert to html and replaced whatever we have in root id
+root.render(<HeadingComponent/>);

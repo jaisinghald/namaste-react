@@ -16,3 +16,40 @@
   --dignostice
   --https
   --Tree shaking -remove unnessary file
+
+# Food ordering app
+/**
+ * Header
+ *  logo
+ *  Nav Bar
+ * Body
+ *  search
+ *  RestaurentContainer
+ *    -RestaurentCard
+ *      -img
+ *      -name
+ *     -cuisines
+ *     -rating
+ *     - delivery time
+ *
+ * footer
+ *   copyright
+ *   address
+ *   links
+ *   contact
+ */
+
+ # There are two type of export and import 
+
+
+ Export Default Component
+ import Component from "path"
+
+ Named Export/Import
+export const component 
+export {Component} from "path"
+
+# React Hooks
+(Normal js utility function ) 
+-useState()---Super powerfull react variable
+-useEffect()

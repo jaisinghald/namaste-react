@@ -53,3 +53,7 @@ export {Component} from "path"
 (Normal js utility function ) 
 -useState()---Super powerfull react variable
 -useEffect()
+
+# 2 Type routing 
+ --Client side Routing
+ --Server side Routing

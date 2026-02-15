@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LOGO_URL } from "../utils/constants";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("Login");
+
+  //if we did not declare dependency array then it act as componentDidMount + componentDidUpdate , it calls after every render
+  //if we use useEffect with empty dependency array then it act as componentDidMount , it calls only once after initial render
+  //if we pass variable in dependency array then it act as componentDidUpdate for that variable , it call on every change of that variable
+  // useEffect(() => {
+  //   console.log("Header component mounted");
+  // }, [btnNameReact]);
 
   return (
     <div className="header">
@@ -11,9 +19,15 @@ const Header = () => {
       </div>
       <div className="nav-items">
         <ul>
-          <li>Home</li>
-          <li>About Us</li>
-          <li>Contact Us</li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About Us</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact Us</Link>
+          </li>
           <li>Cart</li>
           <button
             className="login-btn"

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { lazy, useState } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("Login");
-
+  const onlineStatus = useOnlineStatus();
   //if we did not declare dependency array then it act as componentDidMount + componentDidUpdate , it calls after every render
   //if we use useEffect with empty dependency array then it act as componentDidMount , it calls only once after initial render
   //if we pass variable in dependency array then it act as componentDidUpdate for that variable , it call on every change of that variable
@@ -19,6 +20,7 @@ const Header = () => {
       </div>
       <div className="nav-items">
         <ul>
+          <li>Online Status: {onlineStatus ? "✅" : "🔴"}</li>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -27,6 +29,9 @@ const Header = () => {
           </li>
           <li>
             <Link to="/contact">Contact Us</Link>
+          </li>
+          <li>
+            <Link to="/grocery">Grocery</Link>
           </li>
           <li>Cart</li>
           <button

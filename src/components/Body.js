@@ -2,50 +2,9 @@ import RestaurentCard from "./RestaurentCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-let list = [
-  {
-    type: "Restaurant",
-    data: {
-      id: "16865",
-      name: "Pizza Hut",
-      cloudinaryImageId:
-        "RX_THUMBNAIL/IMAGES/VENDOR/2025/9/1/37e31a5f-6dc1-4ef2-8a9f-67d075111a4e_16865.JPG",
-      costForTwo: "₹350 for two",
-      cuisines: ["Pizzas"],
-      avgRating: 4.3,
-      avgRatingString: "4.3",
-      slaString: "20-25 mins",
-    },
-  },
-  {
-    type: "Restaurant",
-    data: {
-      id: "16866",
-      name: "Dominos",
-      cloudinaryImageId:
-        "RX_THUMBNAIL/IMAGES/VENDOR/2025/9/1/37e31a5f-6dc1-4ef2-8a9f-67d075111a4e_16865.JPG",
-      costForTwo: "₹350 for two",
-      cuisines: ["Pizzas"],
-      avgRating: 3.3,
-      avgRatingString: "3.3",
-      slaString: "20-25 mins",
-    },
-  },
-  {
-    type: "KFC",
-    data: {
-      id: "16867",
-      name: "KFC",
-      cloudinaryImageId:
-        "RX_THUMBNAIL/IMAGES/VENDOR/2025/9/1/37e31a5f-6dc1-4ef2-8a9f-67d075111a4e_16865.JPG",
-      costForTwo: "₹350 for two",
-      cuisines: ["burgers", "chicken"],
-      avgRating: 4.6,
-      avgRatingString: "4.6",
-      slaString: "20-25 mins",
-    },
-  },
-];
+import obj from "../utils/mockMenu";
+import useOnlineStatus from "../utils/useOnlineStatus";
+
 const Body = () => {
   //Local state variable-React powerfull vairbale
   const [listofRestaurents, setListofRestaurents] = useState([]);
@@ -58,39 +17,39 @@ const Body = () => {
   }, []);
 
   const getData = async () => {
-    try {
-      const data = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4695033&lng=78.5968268&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
-      );
-      const json = await data.json();
+    // try {
+    //   const data = await fetch(
+    //     "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4695033&lng=78.5968268&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
+    //   );
+    const json = obj;
 
-      const findRestaurants = (obj) => {
-        if (!obj || typeof obj !== "object") return null;
-        if (Array.isArray(obj)) {
-          for (const item of obj) {
-            const r = findRestaurants(item);
-            if (r) return r;
-          }
-        } else {
-          if (Array.isArray(obj.restaurants)) return obj.restaurants;
-          for (const key of Object.keys(obj)) {
-            const r = findRestaurants(obj[key]);
-            if (r) return r;
-          }
+    const findRestaurants = (obj) => {
+      if (!obj || typeof obj !== "object") return null;
+      if (Array.isArray(obj)) {
+        for (const item of obj) {
+          const r = findRestaurants(item);
+          if (r) return r;
         }
-        return null;
-      };
+      } else {
+        if (Array.isArray(obj.restaurants)) return obj.restaurants;
+        for (const key of Object.keys(obj)) {
+          const r = findRestaurants(obj[key]);
+          if (r) return r;
+        }
+      }
+      return null;
+    };
 
-      const restaurants =
-        findRestaurants(json) ||
-        json?.data?.cards?.[1]?.card?.card?.gridElements?.restaurants ||
-        [];
-      setListofRestaurents(restaurants);
-      setFilteredRestaurents(restaurants); //set the data to state variable first time
-      console.log(json);
-    } catch (err) {
-      console.error("Failed to load restaurants:", err);
-    }
+    const restaurants =
+      findRestaurants(json) ||
+      json?.data?.cards?.[1]?.card?.card?.gridElements?.restaurants ||
+      [];
+    setListofRestaurents(restaurants);
+    setFilteredRestaurents(restaurants); //set the data to state variable first time
+    console.log(json);
+    // } catch (err) {
+    //   console.error("Failed to load restaurants:", err);
+    // }
   };
 
   //when state variable changes react triger the reconsilisation cycle and re-renders the component
@@ -99,6 +58,12 @@ const Body = () => {
   // if (listofRestaurents.length === 0) {
   //   return <Shimmer />;
   // }
+
+  const onLineStatus = useOnlineStatus();
+
+  if (onLineStatus === false) {
+    return <h1>You are offline, please check your internet connection.</h1>;
+  }
   return listofRestaurents.length === 0 ? (
     <Shimmer />
   ) : (

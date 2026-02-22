@@ -68,32 +68,33 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
-        <input
-          type="text"
-          onChange={(e) => {
-            setSearchText(e.target.value);
-          }}
-          className="search-box"
-          value={searchText}
-        />
-        <button
-          className="search-btn"
-          onClick={() => {
-            //filter the restaurant cards and update the UI.
-            //Searchtext
-            const filteredRestaurents = listofRestaurents.filter((res) =>
-              res.info.name.toLowerCase().includes(searchText.toLowerCase()),
-            );
-            setFilteredRestaurents(filteredRestaurents);
-          }}
-        >
-          Search
-        </button>
-
-        <div className="search">
+      <div className="filter flex">
+        <div className="search p-4 m-4">
+          <input
+            type="text"
+            className="border border-solid"
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+            value={searchText}
+          />
           <button
-            className="filter-btn"
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
+            onClick={() => {
+              //filter the restaurant cards and update the UI.
+              //Searchtext
+              const filteredRestaurents = listofRestaurents.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase()),
+              );
+              setFilteredRestaurents(filteredRestaurents);
+            }}
+          >
+            Search
+          </button>
+        </div>
+        <div className="search p-4 m-4">
+          <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
               //filter logic
               const filteredList = listofRestaurents.filter(
@@ -106,7 +107,7 @@ const Body = () => {
           </button>
         </div>
       </div>
-      <div className="restaurent-container">
+      <div className="flex flex-wrap">
         {filteredRestaurents.map((restaurant, idx) => {
           const res = restaurant?.data ?? restaurant;
           if (!res) return null;
